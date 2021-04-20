@@ -8,7 +8,15 @@ module.exports = {
     path: path.resolve(__dirname, PATHs["dist"]),
     filename: "[name].[base:6].js",
   },
-  module: { rules: [] },
+  module: {
+    rules: [
+      {
+        test: /\.(js|mjs|jsx|ts|tsx)$/,
+        exclude: /(node_modules|bower_components)/,
+        use: { loader: "babel-loader" }, //options在.babelrc配置
+      },
+    ],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       title: "webpack_title",
