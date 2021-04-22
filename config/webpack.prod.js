@@ -2,7 +2,7 @@ const { merge } = require("webpack-merge");
 const commonConfig = require("./webpack.common");
 const PATHs = require("./PATH");
 const path = require("path");
-const webpack = require("webpack");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const devServer = {
   contentBase: path.resolve(PATHs.dist),
@@ -16,6 +16,7 @@ const devConfig = {
   mode: "production",
   devtool: "eval-cheap-module-source-map",
   devServer,
+  plugins: [new CleanWebpackPlugin()],
 };
 
 module.exports = merge(commonConfig, devConfig);

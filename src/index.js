@@ -1,9 +1,5 @@
-const testFun = () => {
-  console.log("build..");
-};
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
 
-new Promise(() => {
-  console.log("resolve");
-});
-
-testFun();
+ReactDOM.render(<App />, document.getElementById("root"));
