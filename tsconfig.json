@@ -1,31 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "outDir": "/dist",
-    "module": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "sourceMap": true,
-    "baseUrl": "./",
     "jsx": "react",
-    "strictPropertyInitialization": false,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "rootDirs": ["/src", "/test", "/mock", "./typings"],
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "suppressImplicitAnyIndexErrors": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    "allowJs": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true
+    "allowSyntheticDefaultImports": true
   },
   "include": ["./"],
   "exclude": [

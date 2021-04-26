@@ -5,6 +5,7 @@
   ],
   "plugins": [
     ["@babel/plugin-transform-runtime", { "corejs": 3 }],
-    ["@babel/plugin-proposal-decorators", { "decoratorsBeforeExport": true }]
+    ["@babel/plugin-proposal-decorators", { "decoratorsBeforeExport": true }],
+    "react-hot-loader/babel" //  React 模块热替换
   ]
 }
