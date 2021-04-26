@@ -6,6 +6,14 @@
   "plugins": [
     ["@babel/plugin-transform-runtime", { "corejs": 3 }],
     ["@babel/plugin-proposal-decorators", { "decoratorsBeforeExport": true }],
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": "css"
+      }
+    ], // babel-plugin-import 配置
     "react-hot-loader/babel" //  React 模块热替换
   ]
 }

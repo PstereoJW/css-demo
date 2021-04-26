@@ -1,14 +1,13 @@
-import React, { FC } from 'react';
+import React from 'react';
 import './index.css';
-import { message, Button } from 'antd';
+import { Button } from 'antd';
 import img from '../static/images/buka.png';
 
-const Home: FC = () => {
+const Home = () => {
   return (
     <div className="testTt">
       <img src={img} />
-      <Button>reffef</Button>
-      {message.info('tte')}
+      <Button type="ghost">reffef</Button>
     </div>
   );
 };
