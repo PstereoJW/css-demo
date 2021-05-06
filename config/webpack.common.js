@@ -1,18 +1,45 @@
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+
 const path = require('path');
-const PATHs = require('./PATH');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const WebpackBar = require('webpackbar');
+const PATHs = require('./PATH');
+
+function getCssLoaders(importLoaders) {
+  return [
+    'style-loader',
+    {
+      loader: 'css-loader',
+      options: {
+        modules: false,
+        sourceMap: true,
+        importLoaders
+      }
+    },
+    {
+      loader: 'postcss-loader',
+      options: { sourceMap: true }
+    }
+  ];
+}
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: [
+    'react-hot-loader/patch',
+    path.resolve(__dirname, '../src/index.tsx')
+  ],
   output: {
-    path: path.resolve(__dirname, PATHs['dist']),
+    path: path.resolve(__dirname, PATHs.dist),
     filename: '[name].[base:6].js'
   },
   resolve: {
-    // Add '.ts' and '.tsx' as a resolvable extension.
-    extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+    // 我们导入ts 等模块一般不写后缀名，webpack 会尝试使用这个数组提供的后缀名去导入
+    extensions: ['.ts', '.tsx', '.js', '.json'],
+    alias: {
+      'react-dom': '@hot-loader/react-dom'
+    }
   },
   module: {
     rules: [
@@ -21,9 +48,11 @@ module.exports = {
         use: ['thread-loader']
       },
       {
-        test: /\.(js|mjs|jsx|ts|tsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        use: { loader: 'babel-loader' } //options在.babelrc配置
+        test: /\.(tsx?|js)$/,
+        loader: 'babel-loader',
+        // 开启缓存
+        options: { cacheDirectory: true },
+        exclude: /node_modules/
       },
       {
         test: /\.(js|mjs|jsx|ts|tsx)$/,
@@ -52,14 +81,41 @@ module.exports = {
           publicPath: './images',
           name: '[hash:8].[ext]' // .ext 文件扩展名，jpg\png
         }
+      },
+      {
+        test: /\.css$/,
+        use: getCssLoaders(1)
+      },
+      {
+        test: /\.less$/,
+        use: [
+          // postcss-loader + less-loader 两个 loader，所以 importLoaders 应该设置为 2
+          ...getCssLoaders(2),
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          ...getCssLoaders(2),
+          {
+            loader: 'sass-loader',
+            options: { sourceMap: true }
+          }
+        ]
       }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'webpack_title',
-      template: path.resolve(PATHs['public'], 'index.html'),
-      filename: path.resolve(PATHs['dist'], 'index.html'),
+      template: path.resolve(PATHs.public, 'index.html'),
+      filename: path.resolve(PATHs.dist, 'index.html'),
       hash: true,
       minify: {
         removeAttributeQuotes: true, // 去除多余引号
@@ -79,6 +135,12 @@ module.exports = {
           to: path.resolve(process.cwd(), 'dist/statics/fonts')
         }
       ]
-    })
+    }),
+    new WebpackBar({
+      name: 'react-typescript-boilerplate',
+      // react 蓝
+      color: '#61dafb'
+    }),
+    new FriendlyErrorsPlugin()
   ]
 };
