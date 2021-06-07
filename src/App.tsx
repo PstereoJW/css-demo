@@ -3,9 +3,8 @@ import { hot } from 'react-hot-loader/root';
 import Home from './home';
 
 const App = () => (
-    <div>
-      hello world
-      <Home />
-    </div>
-  );
+  <div>
+    <Home />
+  </div>
+);
 export default hot(App);
