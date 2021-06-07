@@ -1,11 +1,11 @@
 import React from 'react';
 import './index.css';
-import TikTok from '../tiktok';
+import BilibiliBar from '../bilibili';
 
 const Home = () => (
-    <div className="testTt">
-      <TikTok />
-    </div>
-  );
+  <div>
+    <BilibiliBar />
+  </div>
+);
 
 export default Home;

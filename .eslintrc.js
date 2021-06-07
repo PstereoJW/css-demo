@@ -26,14 +26,14 @@ module.exports = {
       }
     ],
     'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ['error'],
+    '@typescript-eslint/no-use-before-define': ['off'],
     'react/jsx-filename-extension': [
       2,
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] }
     ],
     quotes: [2, 'single'], // 单引号
     'no-console': 0, // 不禁用console
-    'no-debugger': 2, // 禁用debugger
+    'no-debugger': 0,
     'no-var': 0, // 对var警告
     semi: 0, // 不强制使用分号
     'no-irregular-whitespace': 0, // 不规则的空白不允许
@@ -97,7 +97,8 @@ module.exports = {
     'prefer-arrow-callback': 0, // 比较喜欢箭头回调
     'arrow-parens': 0, // 箭头函数用小括号括起来
     'arrow-spacing': 0, //= >的前/后括号
-    'import/no-extraneous-dependencies': 0
+    'import/no-extraneous-dependencies': 0,
+    'no-shadow': 'off'
   },
   settings: {
     'import/resolver': {

@@ -26,10 +26,7 @@ const devConfig = {
   ],
   optimization: {
     minimize: true,
-    minimizer: [
-      new TerserPlugin({ extractComments: false }),
-      new OptimizeCSSAssetsPlugin()
-    ],
+    minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin()],
     splitChunks: {
       minSize: 0, // 默认30000（30kb），但是demo中的文件都很小，minSize设为0，让每个文件都满足大小条件,
       cacheGroups: {

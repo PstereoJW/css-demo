@@ -4,7 +4,6 @@ import Home from './home';
 
 const App = () => (
   <div>
-    hello world
     <Home />
   </div>
 );

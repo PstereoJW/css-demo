@@ -45,13 +45,8 @@ module.exports = {
     rules: [
       {
         test: /\.(js|mjs|jsx|ts|tsx)$/,
-        use: ['thread-loader']
-      },
-      {
-        test: /\.(tsx?|js)$/,
-        loader: 'babel-loader',
-        // 开启缓存
-        options: { cacheDirectory: true },
+        use: ['thread-loader', 'cache-loader', 'babel-loader'],
+        include: [path.resolve(__dirname, '../src')],
         exclude: /node_modules/
       },
       {
