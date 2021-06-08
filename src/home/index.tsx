@@ -1,10 +1,10 @@
 import React from 'react';
 import './index.css';
-import BilibiliBar from '../bilibili';
+import MouseMove from '../bilibili/mouseMove';
 
 const Home = () => (
   <div>
-    <BilibiliBar />
+    <MouseMove />
   </div>
 );
 

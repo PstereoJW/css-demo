@@ -57,7 +57,7 @@ const BilibiliBar = () => {
       <canvas ref={myPics}
           height="360"
           width="560"
-      ></canvas>
+      />
     </div>
   );
 };
