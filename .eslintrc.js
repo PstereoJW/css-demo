@@ -50,7 +50,8 @@ module.exports = {
     'arrow-parens': 0, // 箭头函数用小括号括起来
     'arrow-spacing': 0, //= >的前/后括号
     'import/no-extraneous-dependencies': 0,
-    'no-shadow': 'off'
+    'no-shadow': 'off',
+    'import/prefer-default-export': 0
   },
   settings: {
     'import/resolver': {

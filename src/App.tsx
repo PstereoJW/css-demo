@@ -1,10 +1,10 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import Home from './home';
+import BilibiliBanner from './bilibili';
 
 const App = () => (
   <div>
-    <Home />
+    <BilibiliBanner />
   </div>
 );
 export default hot(App);

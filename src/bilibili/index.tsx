@@ -1,65 +1,70 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
+import tree from '../static/images/tree.png';
+import grass from '../static/images/grass.png';
+import leaf from '../static/images/leaf.png';
+import smallGirl from '../static/images/small_girl.png';
+import leaves from '../static/images/leaves.png';
+import girlOpenEyes from '../static/images/girl_open_eyes.png';
+import girlCloseEyes from '../static/images/girl_close_eyes.png';
+import girlSquintEyes from '../static/images/girl_squint_eyes.png';
 
-const BilibiliBar = () => {
-  const myPics = useRef<HTMLCanvasElement>(null);
-  // When true, moving the mouse draws on the canvas
-  let isDrawing = false;
-  let x = 0;
-  let y = 0;
-  useEffect(() => {
-    console.log(myPics.current);
-    const context = myPics.current?.getContext('2d'); // The x and y offset of the canvas from the edge of the page
-    const rect = myPics.current?.getBoundingClientRect();
+import './style.scss';
+import { sleep } from './config';
 
-    // Add the event listeners for mousedown, mousemove, and mouseup
-    myPics.current?.addEventListener('mousedown', (e) => {
-      if (!rect) return;
-      x = e.clientX - rect.left;
-      y = e.clientY - rect.top;
-      isDrawing = true;
-    });
+const BilibiliBanner = () => {
+  const animateBannerRef = useRef<HTMLDivElement>(null);
+  const animateGirlRef = useRef<HTMLDivElement>(null);
 
-    myPics.current?.addEventListener('mousemove', (e) => {
-      console.log(e);
-      if (!rect) return;
-      if (isDrawing === false) {
-        drawLine(context, x, y, e.clientX - rect.left, e.clientY - rect.top);
-        x = e.clientX - rect.left;
-        y = e.clientY - rect.top;
-      }
-    });
+  // 眨眼
+  const handleWink = async () => {
+    if (animateGirlRef.current) {
+      const img = animateGirlRef.current.childNodes[0] as HTMLImageElement;
+      await sleep(50);
+      img.src = girlSquintEyes;
+      await sleep(50);
+      img.src = girlCloseEyes;
+      await sleep(300);
+      img.src = girlOpenEyes;
+      setTimeout(handleWink, 5 * 1000);
+    }
+  };
 
-    window.addEventListener('mouseup', (e) => {
-      if (!rect) return;
-      if (isDrawing === true) {
-        drawLine(context, x, y, e.clientX - rect.left, e.clientY - rect.top);
-        x = 0;
-        y = 0;
-        isDrawing = false;
-      }
-    });
-  }, []);
-
-  function drawLine(context, x1, y1, x2, y2) {
-    context.beginPath();
-    context.strokeStyle = 'black';
-    context.lineWidth = 1;
-    context.moveTo(x1, y1);
-    context.lineTo(x2, y2);
-    context.stroke();
-    context.closePath();
-  }
+  setTimeout(handleWink, 5 * 1000);
 
   return (
-    <div>
-      <h1>Drawing with mouse events</h1>
-
-      <canvas ref={myPics}
-          height="360"
-          width="560"
-      />
+    <div className="bili-banner">
+      <div className="animate-banner" ref={animateBannerRef}>
+        <div className="layer">
+          <img src={tree} data-width="3000" data-height="250" alt="tree" />
+        </div>
+        <div className="layer" ref={animateGirlRef}>
+          <img
+            src={girlOpenEyes}
+            data-width="3000"
+            data-height="275"
+            alt="girlOpenEyes"
+          />
+        </div>
+        <div className="layer">
+          <img src={grass} data-width="3000" data-height="250" alt="grass" />
+        </div>
+        <div className="layer">
+          <img src={leaves} data-width="3000" data-height="250" alt="leaves" />
+        </div>
+        <div className="layer">
+          <img
+            src={smallGirl}
+            data-width="3000"
+            data-height="275"
+            alt="smallGirl"
+          />
+        </div>
+        <div className="layer">
+          <img src={leaf} data-width="3000" data-height="275" alt="leaf" />
+        </div>
+      </div>
     </div>
   );
 };
 
-export default BilibiliBar;
+export default BilibiliBanner;
