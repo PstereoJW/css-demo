@@ -3,7 +3,7 @@ import './styles.scss';
 
 const TikTok = () => (
   <div className="content">
-    <div className="tiktok"></div>
+    <div className="tiktok" />
   </div>
 );
 

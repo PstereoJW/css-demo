@@ -14,7 +14,6 @@ import { sleep } from './config';
 const BilibiliBanner = () => {
   const animateBannerRef = useRef<HTMLDivElement>(null);
   const animateGirlRef = useRef<HTMLDivElement>(null);
-
   // 眨眼
   const handleWink = async () => {
     if (animateGirlRef.current) {
@@ -23,12 +22,13 @@ const BilibiliBanner = () => {
       img.src = girlSquintEyes;
       await sleep(50);
       img.src = girlCloseEyes;
-      await sleep(300);
+      await sleep(350);
+      img.src = girlSquintEyes;
+      await sleep(50);
       img.src = girlOpenEyes;
       setTimeout(handleWink, 5 * 1000);
     }
   };
-
   setTimeout(handleWink, 5 * 1000);
 
   return (
