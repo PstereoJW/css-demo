@@ -1,4 +1,7 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import { IConfig } from './interface';
+
+export const InitConfig: IConfig[] = [];
 
 export const sleep = (time: number) =>
   new Promise((resolve) => setTimeout(resolve, time));
@@ -25,4 +28,9 @@ const initRectNormalScreen = (
   key: number,
   img: HTMLImageElement,
   bannerRect: DOMRect
-) => {};
+) => {
+  const originWidth = parseInt(img.dataset.width as string, 10);
+  const originHeight = parseInt(img.dataset.height as string, 10);
+  const screenWidth = parseInt(img.dataset.screenWidth as string, 10);
+  // const width = initConfig[key].aspect * originWidth;
+};
