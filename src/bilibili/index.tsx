@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import tree from '../static/images/tree.png';
 import grass from '../static/images/grass.png';
 import leaf from '../static/images/leaf.png';
@@ -9,11 +9,12 @@ import girlCloseEyes from '../static/images/girl_close_eyes.png';
 import girlSquintEyes from '../static/images/girl_squint_eyes.png';
 
 import './style.scss';
-import { sleep } from './config';
+import { sleep, initBannerImages } from './config';
 
 const BilibiliBanner = () => {
   const animateBannerRef = useRef<HTMLDivElement>(null);
   const animateGirlRef = useRef<HTMLDivElement>(null);
+  const endPoint = { width: 0, x: 0 };
   // 眨眼
   const handleWink = async () => {
     if (animateGirlRef.current) {
@@ -30,6 +31,21 @@ const BilibiliBanner = () => {
     }
   };
   setTimeout(handleWink, 5 * 1000);
+
+  useEffect(() => {
+    initBannerImages(animateBannerRef);
+    if (animateBannerRef.current) {
+      animateBannerRef.current.addEventListener('mouseenter', (e) => {
+        const width = animateBannerRef.current?.getBoundingClientRect().width;
+        endPoint.x = e.clientX;
+        endPoint.width = width || 0;
+      });
+      animateBannerRef.current.addEventListener('mousemove', (e) => {
+        const deltaX = e.clientX - endPoint.x;
+        initBannerImages(animateBannerRef, deltaX / endPoint.width);
+      });
+    }
+  }, []);
 
   return (
     <div className="bili-banner">

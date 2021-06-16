@@ -51,7 +51,8 @@ module.exports = {
     'arrow-spacing': 0, //= >的前/后括号
     'import/no-extraneous-dependencies': 0,
     'no-shadow': 'off',
-    'import/prefer-default-export': 0
+    'import/prefer-default-export': 0,
+    'no-param-reassign': 0
   },
   settings: {
     'import/resolver': {
