@@ -42,7 +42,12 @@ const BilibiliBanner = () => {
       });
       animateBannerRef.current.addEventListener('mousemove', (e) => {
         const deltaX = e.clientX - endPoint.x;
-        initBannerImages(animateBannerRef, deltaX / endPoint.width);
+        initBannerImages(animateBannerRef, false, deltaX / endPoint.width);
+      });
+      animateBannerRef.current.addEventListener('mouseleave', () => {
+        endPoint.x = 0;
+        endPoint.width = 0;
+        initBannerImages(animateBannerRef, true);
       });
     }
   }, []);

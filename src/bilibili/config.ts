@@ -1,6 +1,9 @@
 import React from 'react';
 import { IConfig } from './interface';
 
+export const sleep = (time: number) =>
+  new Promise((resolve) => setTimeout(resolve, time));
+
 // 每张图片的默认属性配置
 export const InitConfig: IConfig[] = [
   {
@@ -59,12 +62,10 @@ export const InitConfig: IConfig[] = [
   }
 ];
 
-export const sleep = (time: number) =>
-  new Promise((resolve) => setTimeout(resolve, time));
-
 // 初始化banner图片
 export const initBannerImages = (
   banner: React.RefObject<HTMLDivElement>,
+  isReset: boolean = false,
   scale?: number
 ) => {
   const bannerRect = banner.current?.getBoundingClientRect();
@@ -75,7 +76,7 @@ export const initBannerImages = (
   ) {
     Array.from(banner.current.childNodes).forEach((item, index) => {
       const img = item.childNodes[0] as HTMLImageElement;
-      initRectNormalScreen(index, img, bannerRect);
+      initRectNormalScreen(index, img, bannerRect, isReset);
       if (scale) {
         handleMouseMoveChange(index, img, scale);
       }
@@ -87,7 +88,8 @@ export const initBannerImages = (
 const initRectNormalScreen = (
   key: number,
   img: HTMLImageElement,
-  bannerRect: DOMRect
+  bannerRect: DOMRect,
+  isReset: boolean = false
 ) => {
   const originWidth = parseInt(img.dataset.width as string, 10);
   const originHeight = parseInt(img.dataset.height as string, 10);
@@ -97,7 +99,7 @@ const initRectNormalScreen = (
   img.width = width;
   img.height = height;
   // @ts-ignore
-  img.style = initStyle(key);
+  img.style = initStyle(key, isReset);
 };
 
 // 初始化动画样式
