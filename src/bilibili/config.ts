@@ -1,6 +1,8 @@
 import React from 'react';
 import { IConfig } from './interface';
 
+const breakPoint = 1658;
+
 export const sleep = (time: number) =>
   new Promise((resolve) => setTimeout(resolve, time));
 
@@ -13,7 +15,7 @@ export const InitConfig: IConfig[] = [
     y: 0,
     rotate: 0,
     handleBlurChange: (blur, delta) => blur + delta * blur, // 鼠标右移，树越模糊
-    handleParallaxChange: (x, delta) => x // x不变
+    handleParallaxChange: (x) => x // x不变
   },
   {
     scale: 0.6,
@@ -25,7 +27,7 @@ export const InitConfig: IConfig[] = [
     handleParallaxChange: (x, delta) => x + delta * 10 // 鼠标移动与女孩移动方向相同
   },
   {
-    scale: 0.6,
+    scale: 1,
     blur: 1,
     x: -50,
     y: 0,
@@ -76,7 +78,12 @@ export const initBannerImages = (
   ) {
     Array.from(banner.current.childNodes).forEach((item, index) => {
       const img = item.childNodes[0] as HTMLImageElement;
-      initRectNormalScreen(index, img, bannerRect, isReset);
+      console.log(bannerRect.width);
+      if (bannerRect.width > breakPoint) {
+        initRectBigScreen(index, img, bannerRect, isReset);
+      } else {
+        initRectNormalScreen(index, img, isReset);
+      }
       if (scale) {
         handleMouseMoveChange(index, img, scale);
       }
@@ -88,16 +95,32 @@ export const initBannerImages = (
 const initRectNormalScreen = (
   key: number,
   img: HTMLImageElement,
+  isReset: boolean = false
+) => {
+  const originWidth = parseInt(img.dataset.width as string, 10);
+  const originHeight = parseInt(img.dataset.height as string, 10);
+  const width = InitConfig[key].scale * originWidth;
+  const height = InitConfig[key].scale * originHeight;
+  img.width = width;
+  img.height = height;
+  // @ts-ignore
+  img.style = initStyle(key, isReset);
+};
+
+// 初始化大屏情况下，图片长宽和动画样式
+const initRectBigScreen = (
+  key: number,
+  img: HTMLImageElement,
   bannerRect: DOMRect,
   isReset: boolean = false
 ) => {
   const originWidth = parseInt(img.dataset.width as string, 10);
   const originHeight = parseInt(img.dataset.height as string, 10);
-  const screenWidth = parseInt(img.dataset.screenWidth as string, 10);
+  const screenWidth = bannerRect.width;
   const width = InitConfig[key].scale * originWidth;
   const height = InitConfig[key].scale * originHeight;
-  img.width = width;
-  img.height = height;
+  img.width = width + Math.floor((screenWidth - breakPoint) / 10) * 2;
+  img.height = height + Math.floor((screenWidth - breakPoint) / 10) * 1;
   // @ts-ignore
   img.style = initStyle(key, isReset);
 };

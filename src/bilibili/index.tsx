@@ -32,24 +32,32 @@ const BilibiliBanner = () => {
   };
   setTimeout(handleWink, 5 * 1000);
 
+  // 事件监听 鼠标移动事件处理图片动画, resize事件处理图片长宽
   useEffect(() => {
     initBannerImages(animateBannerRef);
-    if (animateBannerRef.current) {
-      animateBannerRef.current.addEventListener('mouseenter', (e) => {
-        const width = animateBannerRef.current?.getBoundingClientRect().width;
-        endPoint.x = e.clientX;
-        endPoint.width = width || 0;
-      });
-      animateBannerRef.current.addEventListener('mousemove', (e) => {
-        const deltaX = e.clientX - endPoint.x;
-        initBannerImages(animateBannerRef, false, deltaX / endPoint.width);
-      });
-      animateBannerRef.current.addEventListener('mouseleave', () => {
-        endPoint.x = 0;
-        endPoint.width = 0;
-        initBannerImages(animateBannerRef, true);
-      });
-    }
+    animateBannerRef.current?.addEventListener('mouseenter', (e) => {
+      const width = animateBannerRef.current?.getBoundingClientRect().width;
+      endPoint.x = e.clientX;
+      endPoint.width = width || 0;
+    });
+    animateBannerRef.current?.addEventListener('mousemove', (e) => {
+      const deltaX = e.clientX - endPoint.x;
+      initBannerImages(animateBannerRef, false, deltaX / endPoint.width);
+    });
+    animateBannerRef.current?.addEventListener('mouseleave', () => {
+      endPoint.x = 0;
+      endPoint.width = 0;
+      initBannerImages(animateBannerRef, true);
+    });
+    animateBannerRef.current?.addEventListener('resize', () => {
+      initBannerImages(animateBannerRef, false);
+    });
+    return () => {
+      animateBannerRef.current?.removeEventListener('mouseenter', () => {});
+      animateBannerRef.current?.removeEventListener('mousemove', () => {});
+      animateBannerRef.current?.removeEventListener('mouseleave', () => {});
+      animateBannerRef.current?.removeEventListener('resize', () => {});
+    };
   }, []);
 
   return (
