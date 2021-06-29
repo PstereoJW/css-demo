@@ -52,7 +52,9 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
     'no-shadow': 'off',
     'import/prefer-default-export': 0,
-    'no-param-reassign': 0
+    'no-param-reassign': 0,
+    'react/destructuring-assignment': 0,
+    'react/require-default-props': 0
   },
   settings: {
     'import/resolver': {

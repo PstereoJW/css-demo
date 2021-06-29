@@ -14,7 +14,38 @@ import { sleep, initBannerImages } from './config';
 const BilibiliBanner = () => {
   const animateBannerRef = useRef<HTMLDivElement>(null);
   const animateGirlRef = useRef<HTMLDivElement>(null);
-  const endPoint = { width: 0, x: 0 };
+  const endPoint = useRef<{ width: number; x: number }>({ width: 0, x: 0 });
+
+  // resize事件处理图片长宽
+  useEffect(() => {
+    initBannerImages(animateBannerRef);
+    animateBannerRef.current?.addEventListener('resize', () => {
+      initBannerImages(animateBannerRef, false);
+    });
+    return () => {
+      animateBannerRef.current?.removeEventListener('resize', () => {});
+    };
+  }, []);
+
+  // 鼠标移动事件处理图片动画
+  const handleBannerMouseEnter = (e) => {
+    const width = animateBannerRef.current?.getBoundingClientRect().width;
+    endPoint.current.x = e.clientX;
+    endPoint.current.width = width || 0;
+  };
+
+  const handleBannerMouseMove = (e) => {
+    console.log(e);
+    const deltaX = e.clientX - endPoint.current.x;
+    initBannerImages(animateBannerRef, false, deltaX / endPoint.current.width);
+  };
+
+  const handleBannerMouseLeave = () => {
+    endPoint.current.x = 0;
+    endPoint.current.width = 0;
+    initBannerImages(animateBannerRef, true);
+  };
+
   // 眨眼
   const handleWink = async () => {
     if (animateGirlRef.current) {
@@ -23,7 +54,7 @@ const BilibiliBanner = () => {
       img.src = girlSquintEyes;
       await sleep(50);
       img.src = girlCloseEyes;
-      await sleep(350);
+      await sleep(300);
       img.src = girlSquintEyes;
       await sleep(50);
       img.src = girlOpenEyes;
@@ -32,37 +63,15 @@ const BilibiliBanner = () => {
   };
   setTimeout(handleWink, 5 * 1000);
 
-  // 事件监听 鼠标移动事件处理图片动画, resize事件处理图片长宽
-  useEffect(() => {
-    initBannerImages(animateBannerRef);
-    animateBannerRef.current?.addEventListener('mouseenter', (e) => {
-      const width = animateBannerRef.current?.getBoundingClientRect().width;
-      endPoint.x = e.clientX;
-      endPoint.width = width || 0;
-    });
-    animateBannerRef.current?.addEventListener('mousemove', (e) => {
-      const deltaX = e.clientX - endPoint.x;
-      initBannerImages(animateBannerRef, false, deltaX / endPoint.width);
-    });
-    animateBannerRef.current?.addEventListener('mouseleave', () => {
-      endPoint.x = 0;
-      endPoint.width = 0;
-      initBannerImages(animateBannerRef, true);
-    });
-    animateBannerRef.current?.addEventListener('resize', () => {
-      initBannerImages(animateBannerRef, false);
-    });
-    return () => {
-      animateBannerRef.current?.removeEventListener('mouseenter', () => {});
-      animateBannerRef.current?.removeEventListener('mousemove', () => {});
-      animateBannerRef.current?.removeEventListener('mouseleave', () => {});
-      animateBannerRef.current?.removeEventListener('resize', () => {});
-    };
-  }, []);
-
   return (
     <div className="bili-banner">
-      <div className="animate-banner" ref={animateBannerRef}>
+      <div
+        className="animate-banner"
+        onMouseEnter={handleBannerMouseEnter}
+        onMouseMove={handleBannerMouseMove}
+        onMouseLeave={handleBannerMouseLeave}
+        ref={animateBannerRef}
+      >
         <div className="layer">
           <img src={tree} data-width="3000" data-height="250" alt="tree" />
         </div>
