@@ -23,7 +23,7 @@ const ParallaxBanner = (props: ParallaxBannerProps) => {
   const [style, setStyle] = useState({});
 
   useEffect(() => {
-    if (options) setting.current = options;
+    if (options) setting.current = { ...defaultSettings, ...options };
     if (styleProps) setStyle(styleProps);
   }, []);
 
@@ -39,7 +39,6 @@ const ParallaxBanner = (props: ParallaxBannerProps) => {
 
   const handleMouseEnter = () => {
     updateElementPosition();
-    setStyle({});
     handleTransition();
   };
   const handleMouseMove = (e) => {
@@ -84,7 +83,6 @@ const ParallaxBanner = (props: ParallaxBannerProps) => {
   const getValues = (e) => {
     const x = (e.clientX - left.current) / width.current;
     const y = (e.clientY - top.current) / height.current;
-    debugger;
     const _x = Math.min(Math.max(x, 0), 1);
     const _y = Math.min(Math.max(y, 0), 1);
 
