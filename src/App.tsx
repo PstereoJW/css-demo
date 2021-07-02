@@ -8,19 +8,28 @@ import Shopee from './shopee';
 
 const App = () => (
   <div>
-    {/* <BilibiliBanner /> */}
-    <ParallaxBanner
-      options={{}}
-      styleProps={{
-        background: `url(${dogBackground}) no-repeat center`,
-        backgroundSize: 'fit',
-        height: 700
-      }}
-    >
-      <ParallaxBanner options={{ max: 10, perspective: 1000, scale: 1.05 }}>
-        <img style={{ width: 200, height: 200 }} src={forword} alt="back" />
+    <BilibiliBanner />
+    <div>
+      <ParallaxBanner
+        options={{}}
+        styleProps={{
+          background: `url(${dogBackground}) no-repeat center`,
+          backgroundSize: 'fit',
+          height: 300,
+          width: 500,
+          display: 'flex',
+          justifyContent: 'center'
+        }}
+      >
+        <ParallaxBanner
+          options={{ max: 10, perspective: 1000, scale: 1.05 }}
+          styleProps={{}}
+        >
+          <img style={{ width: 200, height: 200 }} src={forword} alt="back" />
+        </ParallaxBanner>
       </ParallaxBanner>
-    </ParallaxBanner>
+    </div>
+
     {/* <Shopee /> */}
   </div>
 );
