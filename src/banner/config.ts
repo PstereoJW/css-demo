@@ -1,5 +1,5 @@
 export const defaultSettings = {
-  reverse: false,
+  reverse: true,
   max: 25,
   perspective: 1000,
   easing: 'cubic-bezier(.03,.98,.52,.99)',

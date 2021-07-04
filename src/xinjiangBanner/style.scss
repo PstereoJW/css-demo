@@ -1,0 +1,72 @@
+.xinjiangBanner {
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  font-family: 'Candal', sans-serif;
+}
+@mixin absolute-center($top: 50%) {
+  position: absolute;
+  top: $top;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+main {
+  position: relative;
+  top: 12vh;
+  margin: auto;
+  min-height: 100px;
+  max-height: 440px;
+  width: 80%;
+  max-width: 680px;
+  color: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.2) inset,
+    0 1px 1px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 1px rgba(25, 25, 25, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -20px;
+    // background: rgba(255, 0, 0, .5); /* for debugging */
+    filter: blur(6px);
+    transition: all 0.2s ease-in-out, filter 0.8s 0.22s ease-in-out;
+  }
+
+  &:hover::before {
+    filter: blur(0);
+    // filter: blur(0) brightness(1.1);
+  }
+
+  & > H1 {
+    @include absolute-center();
+    font-size: 3rem;
+    margin-top: 0;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &:hover > H1 {
+    transform: translate3d(-50%, -80%, 0);
+  }
+
+  & > H2 {
+    @include absolute-center();
+    font-size: 1rem;
+    margin-top: 10px;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &:hover > H2 {
+    opacity: 1;
+    transform: translate3d(-50%, -18%, 0);
+    transition: all 0.32s 0.28s ease-out;
+  }
+}
