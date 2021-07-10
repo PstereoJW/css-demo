@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'Abril Fatface';
+  font-weight: normal;
+  src: url('../fonts/AbrilFatface-Regular.ttf');
+}
+@font-face {
+  font-family: 'Cool';
+  font-weight: normal;
+  src: url('../fonts/cool.ttf');
+}
